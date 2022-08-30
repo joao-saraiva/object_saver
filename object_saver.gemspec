@@ -6,11 +6,11 @@ Gem::Specification.new do |spec|
   spec.name = "object_saver"
   spec.version = ObjectSaver::VERSION
   spec.authors = ["joão"]
-  spec.email = ["programador09@speedgov.com.br"]
+  spec.email = ["joaovsaraivasousa@gmail.com"]
 
   spec.summary = "TODO: Write a short summary, because RubyGems requires one."
   spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.homepage = "https://github.com/joao-saraiva/object_saver"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 2.6.0"
 
