@@ -2,7 +2,6 @@
 
 require_relative "object_saver/version"
 
-module ObjectSaver
-  class Error < StandardError; end
-  # Your code goes here...
+class ObjectSaver
+  
 end
