@@ -10,7 +10,6 @@ require "./lib/object_saver"
 class TestObjectSaver < Minitest::Test
   def test_that_can_dismember_an_entire_object
     object_saver = ObjectSaver.new
-    byebug
 
     assert_equal(object_saver.dismember_object(Bar.new("variable")), {
                    bar_object: {
