@@ -5,7 +5,7 @@ class Bar
   attr_accessor :placeholder, :optional
 
   def initialize(placeholder, optional = nil)
-    @optional = optional 
+    @optional = optional
     @placeholder = placeholder
   end
 

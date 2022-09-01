@@ -3,7 +3,7 @@
 require "byebug"
 
 # Loading all classes
-Dir.glob('lib/object_saver/*.rb').map{ |i| i.gsub('lib/', '')}.each { |f| require f if f != 'lib/object_saver.rb' }
+Dir.glob("lib/object_saver/*.rb").map { |i| i.gsub("lib/", "") }.each { |f| require f if f != "lib/object_saver.rb" }
 
 require "json"
 
@@ -51,14 +51,19 @@ class ObjectSaver
   def load
     file = JSON.parse(File.read(file_path))
     primary_object_key = file.keys.first
-    object_name = primary_object_key.gsub('_object', '').capitalize
+    object_name = primary_object_key.gsub("_object", "").capitalize
     meta_object = (Object.const_get object_name)
     meta_params_orders = meta_object.instance_method(:initialize).parameters.map(&:last).map(&:to_s)
-    values = []
-    file[primary_object_key].keys.each_with_index do |key, index|
-      values.push(file[primary_object_key][meta_params_orders[index]])
+
+    meta_object.new(*ordered_values(file[primary_object_key], meta_params_orders))
+  end
+
+  def ordered_values(hash, order)
+    ordered_values = []
+    hash.keys.each_with_index do |_key, index|
+      ordered_values.push(hash[order[index]])
     end
 
-    object = meta_object.new(*values)
+    ordered_values
   end
 end
