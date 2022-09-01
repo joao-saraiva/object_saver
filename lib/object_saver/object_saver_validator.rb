@@ -7,13 +7,13 @@ require "byebug"
 class ObjectSaverValidator
   include PureValidator::Validator
 
-  validates :directory, presence: true
+  validates :file_path, presence: true
 
-  validate :directory_should_exist
+  validate :file_path_should_exist
 
-  def directory_should_exist(object, errors)
-    directory = object.directory
+  def file_path_should_exist(object, errors)
+    file_path = object.file_path
 
-    errors.add(:directory, "directory does not exist in your system") if !directory.nil? && !Dir.exist?(directory)
+    errors.add(:file_path, "file_path does not exist in your system") if !file_path.nil? && !File.file?(file_path)
   end
 end

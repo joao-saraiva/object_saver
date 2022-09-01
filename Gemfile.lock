@@ -42,6 +42,7 @@ PLATFORMS
 
 DEPENDENCIES
   byebug
+  json
   minitest (~> 5.0)
   object_saver!
   pure_validator
