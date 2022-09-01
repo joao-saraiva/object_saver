@@ -26,9 +26,10 @@ class TestObjectSaver < Minitest::Test
   def test_that_can_dismember_an_entire_object
     object_saver = ObjectSaver.new "test/test.json"
 
-    assert_equal(object_saver.dismember_object(Bar.new("variable")), {
+    assert_equal(object_saver.dismember_object(Bar.new("variable", "test")), {
                    bar_object: {
-                     placeholder: "variable"
+                     placeholder: "variable",
+                     optional: "test"
                    }
                  })
   end
@@ -38,5 +39,13 @@ class TestObjectSaver < Minitest::Test
     bar = Bar.new("variable")
 
     assert_equal(object_saver.save(bar), true)
+  end
+
+  def test_that_can_load_an_object
+    object_saver = ObjectSaver.new "test/test.json"
+    bar = Bar.new("variable")
+    object_saver.save(bar)
+
+    assert_equal(object_saver.load, Bar.new("variable"))
   end
 end

@@ -2,9 +2,14 @@
 
 # This is a class for tests
 class Bar
-  attr_accessor :placeholder
+  attr_accessor :placeholder, :optional
 
-  def initialize(placeholder)
+  def initialize(placeholder, optional = nil)
+    @optional = optional 
     @placeholder = placeholder
+  end
+
+  def ==(other)
+    placeholder == other.placeholder
   end
 end
