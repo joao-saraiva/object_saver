@@ -13,3 +13,5 @@ gem "rubocop", "~> 1.21"
 
 gem 'pure_validator'
 
+gem 'byebug'
+
