@@ -10,7 +10,7 @@ class ObjectSaver
     @directory = directory
     errors = ObjectSaverValidator.new.validate(self)
 
-    raise StandardError.new errors.to_s if errors.any? 
+    raise StandardError, errors.to_s if errors.any?
   end
 
   def dismember_object(object, *args)
@@ -27,7 +27,7 @@ class ObjectSaver
     hashed_object
   end
 
-  def ==(object)
-    directory = object.directory
+  def ==(other)
+    directory == other.directory
   end
 end
