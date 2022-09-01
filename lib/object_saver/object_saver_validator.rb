@@ -14,6 +14,6 @@ class ObjectSaverValidator
   def file_path_should_exist(object, errors)
     file_path = object.file_path
 
-    errors.add(:file_path, "file_path does not exist in your system") if !file_path.nil? && !File.file?(file_path)
+    errors.add(:file_path, "File does not exist, please create and try again") if !file_path.nil? && !File.file?(file_path)
   end
 end
