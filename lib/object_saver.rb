@@ -1,8 +1,17 @@
 # frozen_string_literal: true
 
+require "object_saver/object_saver_validator"
+
 # This object should be able to save an object into a json and read it
 class ObjectSaver
   attr_accessor :directory
+
+  def initialize(directory)
+    @directory = directory
+    errors = ObjectSaverValidator.new.validate(self)
+
+    raise StandardError.new errors.to_s if errors.any? 
+  end
 
   def dismember_object(object, *args)
     instances_to_save = args.any? ? args : object.instance_variables
@@ -16,5 +25,9 @@ class ObjectSaver
     end
 
     hashed_object
+  end
+
+  def ==(object)
+    directory = object.directory
   end
 end
