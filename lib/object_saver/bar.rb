@@ -12,4 +12,12 @@ class Bar
   def ==(other)
     placeholder == other.placeholder
   end
+
+  def Bar.create_from_object_saver
+    block = lambda do |i|
+    end
+
+    total_params = instance_method(:initialize).parameters.map(&:last).size
+    new(*Array.new(total_params, nil), &block)
+  end
 end

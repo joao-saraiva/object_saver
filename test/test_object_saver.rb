@@ -70,7 +70,6 @@ class TestObjectSaver < Minitest::Test
   end
 
   def test_that_can_load_nested_objects
-    skip
     object_saver = ObjectSaver.new "test/test.json"
     foo = Foo.new(2)
     object_saver.save(foo)

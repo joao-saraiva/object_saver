@@ -76,16 +76,15 @@ class ObjectSaver
     meta_object = (Object.const_get object_name)
     meta_params_orders = meta_object.instance_method(:initialize).parameters.map(&:last).map(&:to_s)
 
-    meta_object.new(*ordered_values(file[primary_object_key], meta_params_orders))
+    created_object = meta_object.create_from_object_saver()
+
+    file[primary_object_key].keys.each do |key|
+      created_object.send("#{key.to_s}=", file[primary_object_key][key])
+    end
+    created_object
   end
 
   def ordered_values(hash, order)
-    ordered_values = []
 
-    hash.keys.each_with_index do |_key, index|
-      ordered_values.push(hash[order[index]])
-    end
-
-    ordered_values
   end
 end
