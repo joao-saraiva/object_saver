@@ -1,1 +1,1 @@
-{"bar_object":{"optional":null,"placeholder":"variable"}}
+{"foo_object":{"bars":{"bar_object1":{"optional":null,"placeholder":"placeholder_1"},"bar_object2":{"optional":null,"placeholder":"placeholder_2"}}}}

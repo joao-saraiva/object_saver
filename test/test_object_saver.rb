@@ -3,6 +3,7 @@
 require "byebug"
 require "test_helper"
 require "./lib/object_saver/bar"
+require "./lib/object_saver/foo"
 require "./lib/object_saver"
 
 class TestObjectSaver < Minitest::Test
@@ -34,6 +35,25 @@ class TestObjectSaver < Minitest::Test
                  })
   end
 
+  def test_that_can_dismember_an_object_with_nested_objects
+    object_saver = ObjectSaver.new "test/test.json"
+
+    assert_equal(object_saver.dismember_object(Foo.new(2)), {
+      foo_object: {
+        bars:{
+          bar_object1:{
+            optional: nil,
+            placeholder: "placeholder_1"
+          },
+          bar_object2: {
+            optional: nil,
+            placeholder: "placeholder_2"
+          }
+        } 
+      }
+    })
+  end
+
   def test_that_can_save_an_object
     object_saver = ObjectSaver.new "test/test.json"
     bar = Bar.new("variable")
@@ -47,5 +67,14 @@ class TestObjectSaver < Minitest::Test
     object_saver.save(bar)
 
     assert_equal(object_saver.load, Bar.new("variable"))
+  end
+
+  def test_that_can_load_nested_objects
+    skip
+    object_saver = ObjectSaver.new "test/test.json"
+    foo = Foo.new(2)
+    object_saver.save(foo)
+
+    assert_equal(object_saver.load, Foo.new(2))
   end
 end

@@ -10,6 +10,7 @@ require "json"
 # This object should be able to save an object into a json and read it
 class ObjectSaver
   attr_accessor :file_path
+  PRIMITIVE_TYPES = [Float, Integer, TrueClass, FalseClass, Float, String, Hash, Array, NilClass]
 
   def initialize(file_path)
     @file_path = file_path
@@ -26,7 +27,27 @@ class ObjectSaver
 
     instances_to_save.each do |instance|
       formated_instance = instance.to_s.tr("@", "")
-      hashed_object[object_key][formated_instance.to_sym] = object.send(formated_instance)
+      hashed_object[object_key][formated_instance.to_sym] = formated_instance_value(object, formated_instance)
+    end
+
+    hashed_object
+  end
+
+  def formated_instance_value(object, formated_instance)
+    values = object.send(formated_instance)
+    objects_instances = values.kind_of?(Array) ? values.map { |v| v.class }.uniq : [values.class]
+
+    return object.send(formated_instance) if (PRIMITIVE_TYPES & objects_instances).any?
+
+    hashed_object = {}
+    values.each_with_index do |value, index|
+      object_key = "#{value.class.name.downcase}_object#{index + 1}".to_sym
+      hashed_object[object_key] = {}
+
+      value.instance_variables.each do |instance|
+        formated_instance = instance.to_s.tr("@", "")
+        hashed_object[object_key][formated_instance.to_sym] = value.send(formated_instance)
+      end
     end
 
     hashed_object
@@ -60,6 +81,7 @@ class ObjectSaver
 
   def ordered_values(hash, order)
     ordered_values = []
+
     hash.keys.each_with_index do |_key, index|
       ordered_values.push(hash[order[index]])
     end

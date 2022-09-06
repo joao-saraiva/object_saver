@@ -6,9 +6,9 @@ require_relative "bar"
 class Foo
   attr_accessor :bars
 
-  def initialize(bars_size)
+  def initialize(bars_size )
     @bars = []
-    (1..bars_size).each do |i|
+    (1..bars_size.to_i).each do |i|
       @bars.push Bar.new("placeholder_#{i}")
     end
   end
